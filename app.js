@@ -55,10 +55,18 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+// var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+// var ip = process.env.OPENSHIFT_NODEJS_IP;
  
-app.listen(server_port, server_ip_address, function () {
-  console.log( "Listening on " + server_ip_address + ", port " + server_port )
+// app.listen(port, ip, function () {
+//   console.log( "Listening on " + ip + ", port " + port )
+// });
+
+app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 8080);
+app.set('ip', process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1');
+
+http.createServer(app).listen(app.get('port'), app.get('ip'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
 });
+
 module.exports = app;

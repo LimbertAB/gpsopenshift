@@ -62,11 +62,10 @@ app.use(function(err, req, res, next) {
 //   console.log( "Listening on " + ip + ", port " + port )
 // });
 
-app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 8080);
-app.set('ip', process.env.OPENSHIFT_NODEJS_IP);
-
-http.createServer(app).listen(app.get('port'), app.get('ip'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+ 
+app.listen(server_port, server_ip_address, function () {
+  console.log( "Listening on " + server_ip_address + ", port " + server_port )
 });
-
 module.exports = app;
